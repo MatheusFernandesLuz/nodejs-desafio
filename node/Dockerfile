@@ -11,7 +11,7 @@ RUN apt-get update \
     && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
 
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install -g
 
