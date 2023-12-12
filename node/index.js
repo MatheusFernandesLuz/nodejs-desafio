@@ -1,8 +1,9 @@
-const express = require("express")
-const mysql = require("mysql")
+import express from "express";
+import { createConnection } from "mysql";
 
 const app = express();
 const port = 3000
+
 const config = {
   host: 'db',
   user: 'root',
@@ -10,9 +11,22 @@ const config = {
   database: 'nodedb'
 };
 
-app.get('/', (req, res) => {
+const connection = createConnection(config)
 
-  var connection = mysql.createConnection(config)
+var sql = "CREATE DATABASE IF NOT EXISTS nodedb;"
+connection.query(sql)
+
+sql = `
+  CREATE TABLE IF NOT EXISTS people (
+    Id int AUTO_INCREMENT,
+    Name varchar(255) NOT NULL,
+    PRIMARY KEY (ID)
+  );
+`
+
+connection.query(sql)
+
+app.get('/', (req, res) => {
   var sql = `INSERT INTO people(name) values("Matheus")`
   connection.query(sql);
 
